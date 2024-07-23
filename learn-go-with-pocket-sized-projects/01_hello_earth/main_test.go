@@ -28,9 +28,9 @@ func TestGreet_FR(t *testing.T) {
 	}
 }
 
-func TestGreet_Default(t *testing.T) {
+func TestGreet_unsupported(t *testing.T) {
 	lang := language("FOO")
-	want := ""
+	want := "unsupported language: FOO"
 	got := greet(lang)
 
 	if want != got {
