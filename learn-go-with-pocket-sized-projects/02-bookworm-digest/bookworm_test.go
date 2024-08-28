@@ -89,3 +89,44 @@ func TestLoadUserData(t *testing.T) {
 		)
 	}
 }
+
+func TestFindCommonBooks(t *testing.T) {
+	type testCase struct {
+		data []Bookworm
+		want []Book
+	}
+
+	tests := map[string]testCase{
+		"common_books": {
+			data: []Bookworm{
+				{Name: "A", Books: []Book{handmaidsTale, theBellJar}},
+				{Name: "B", Books: []Book{oryxAndCrake, handmaidsTale, janeEyre}},
+			},
+			want: []Book{handmaidsTale},
+		},
+		"no_common_books": {
+			data: []Bookworm{
+				{Name: "A", Books: []Book{handmaidsTale, theBellJar}},
+				{Name: "B", Books: []Book{oryxAndCrake, janeEyre}},
+			},
+			want: []Book{},
+		},
+		"empty_bookworms": {
+			data: []Bookworm{},
+			want: []Book{},
+		},
+	}
+
+	for testName, testData := range tests {
+		t.Run(
+			testName,
+			func(t *testing.T) {
+				want := testData.want
+				got := findCommonBooks(testData.data)
+				if !equalBooks(got, testData.want) {
+					t.Fatalf("different results got %v, expected %v", got, want)
+				}
+			},
+		)
+	}
+}

@@ -16,6 +16,7 @@ type Book struct {
 	Title  string `json:"title"`
 }
 
+// Load data from JSON file
 func loadUserData(filePath string) ([]Bookworm, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -30,4 +31,21 @@ func loadUserData(filePath string) ([]Bookworm, error) {
 	}
 
 	return bookworms, nil
+}
+
+// Find books common to more than one bookworm
+func findCommonBooks(bookworms []Bookworm) []Book {
+	bookCounter := map[Book]uint{}
+	for _, bookworm := range bookworms {
+		for _, book := range bookworm.Books {
+			bookCounter[book] += 1
+		}
+	}
+	commonBooks := []Book{}
+	for book, bookCount := range bookCounter {
+		if bookCount > 1 {
+			commonBooks = append(commonBooks, book)
+		}
+	}
+	return commonBooks
 }
