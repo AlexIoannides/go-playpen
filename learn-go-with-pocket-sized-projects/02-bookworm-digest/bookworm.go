@@ -1,4 +1,3 @@
-// Load User data
 package main
 
 import (
