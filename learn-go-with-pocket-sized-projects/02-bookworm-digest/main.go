@@ -1,12 +1,17 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 )
 
 func main() {
-	bookwormData, err := loadUserData("test-data/bookworms.json")
+	var path string
+	flag.StringVar(&path, "path", "test-data/bookworms.json", "Path to JSON data file")
+	flag.Parse()
+
+	bookwormData, err := loadUserData(path)
 	if err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "failed to load bookworms: %s\n", err)
 		os.Exit(1)
