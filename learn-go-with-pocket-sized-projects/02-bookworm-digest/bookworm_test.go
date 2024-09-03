@@ -1,6 +1,7 @@
 package main
 
 import (
+	"sort"
 	"testing"
 )
 
@@ -26,6 +27,18 @@ func equalBooks(got, want []Book) bool {
 	return true
 }
 
+// test helper function for sorting slices of Books
+func sortBooks(books []Book) []Book {
+	sort.Slice(books, func(i, j int) bool {
+		if books[i].Author != books[j].Author {
+			return books[i].Author < books[j].Author
+		}
+		return books[i].Title < books[j].Title
+	})
+
+	return books
+}
+
 // test helper function for asserting if two lists of Bookworms are equal
 func equalBookworms(got, want []Bookworm) bool {
 	if len(got) != len(want) {
@@ -37,7 +50,7 @@ func equalBookworms(got, want []Bookworm) bool {
 			return false
 		}
 
-		if !equalBooks(got[i].Books, want[i].Books) {
+		if !equalBooks(sortBooks(got[i].Books), sortBooks(want[i].Books)) {
 			return false
 		}
 	}
