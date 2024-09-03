@@ -11,12 +11,15 @@ func main() {
 		_, _ = fmt.Fprintf(os.Stderr, "failed to load bookworms: %s\n", err)
 		os.Exit(1)
 	}
-	printBookworms(bookwormData)
+	commonBooks := findCommonBooks(bookwormData)
+
+	fmt.Println("Books read by more than one bookworm:")
+	displayBooks(commonBooks)
 }
 
-// Print bookworm data to stdout
-func printBookworms(data []Bookworm) {
-	for _, bookworm := range data {
-		fmt.Println(bookworm)
+// Print title and authors for a list of books
+func displayBooks(books []Book) {
+	for _, book := range books {
+		fmt.Println("-", book.Title, "by", book.Author)
 	}
 }
