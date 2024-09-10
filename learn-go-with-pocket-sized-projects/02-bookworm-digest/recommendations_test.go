@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 func TestSet_Contains(t *testing.T) {
 	s := set{handmaidsTale: {}, oryxAndCrake: {}, theBellJar: {}}
@@ -36,13 +39,31 @@ func TestNewSet(t *testing.T) {
 }
 
 func TestRecommend(t *testing.T) {
-	targetBookworm := Bookworm{Name: "Kevin", Books: []Book{oryxAndCrake, janeEyre}}
 	t.Run("recommendations_when_books_in_common", func(t *testing.T) {
+		targetBookworm := Bookworm{Name: "Kevin", Books: []Book{oryxAndCrake, janeEyre}}
 		wantBook := handmaidsTale
-		recommendation := recommend(bookWorms, targetBookworm, 1)
-		gotBook := recommendation[0].Book
+		wantScore := math.Log(2) + 1
+
+		recommendations := recommend(bookWorms, targetBookworm, 1)
+		if len(recommendations) != 1 {
+			t.Errorf("got %v recommendations, expected %v", len(recommendations), 1)
+		}
+
+		gotBook := recommendations[0].Book
+		gotScore := recommendations[0].Score
 		if gotBook != wantBook {
 			t.Errorf("Expected recommended book: %v, got: %v", wantBook, gotBook)
+		}
+		if gotScore != wantScore {
+			t.Errorf("Expected recommended book score: %v, got: %v", wantScore, gotScore)
+		}
+	})
+	t.Run("recommendations_when_no_books_in_common", func(t *testing.T) {
+		targetBookworm := Bookworm{Name: "Kevin", Books: make([]Book, 0)}
+
+		recommendations := recommend(bookWorms, targetBookworm, 1)
+		if len(recommendations) != 0 {
+			t.Errorf("expected no recommendations, got %v", len(recommendations))
 		}
 	})
 }
