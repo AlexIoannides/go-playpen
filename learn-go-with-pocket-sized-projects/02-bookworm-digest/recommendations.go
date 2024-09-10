@@ -27,6 +27,20 @@ type Recommendation struct {
 	Score float64
 }
 
+// Define sort.Interface for a collection of Recommendations
+type Recommedations []Recommendation
+
+func (r Recommedations) Len() int { return len(r) }
+
+func (r Recommedations) Swap(i, j int) {
+	r[i], r[j] = r[j], r[i]
+}
+
+func (r Recommedations) Less(i, j int) bool {
+	return r[i].Score < r[j].Score
+}
+
+// Recommend books for a bookworm
 func recommend(allBookworms []Bookworm, targetBookworm Bookworm, n int) []Recommendation {
 	booksOnShelf := newSet(&targetBookworm.Books)
 	recommendScores := map[Book]float64{}
@@ -59,9 +73,7 @@ func recommend(allBookworms []Bookworm, targetBookworm Bookworm, n int) []Recomm
 	for book, score := range recommendScores {
 		allRecommendations = append(allRecommendations, Recommendation{book, score})
 	}
-	sort.Slice(allRecommendations, func(i, j int) bool {
-		return allRecommendations[i].Score < allRecommendations[j].Score
-	})
+	sort.Sort(Recommedations(allRecommendations))
 
 	if len(allRecommendations) > 0 {
 		if n > len(allRecommendations) {
