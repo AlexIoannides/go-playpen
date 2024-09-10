@@ -36,5 +36,13 @@ func TestNewSet(t *testing.T) {
 }
 
 func TestRecommend(t *testing.T) {
-
+	targetBookworm := Bookworm{Name: "Kevin", Books: []Book{oryxAndCrake, janeEyre}}
+	t.Run("recommendations_when_books_in_common", func(t *testing.T) {
+		wantBook := handmaidsTale
+		recommendation := recommend(bookWorms, targetBookworm, 1)
+		gotBook := recommendation[0].Book
+		if gotBook != wantBook {
+			t.Errorf("Expected recommended book: %v, got: %v", wantBook, gotBook)
+		}
+	})
 }
