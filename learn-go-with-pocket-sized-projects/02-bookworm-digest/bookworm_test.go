@@ -12,6 +12,11 @@ var (
 	janeEyre      = Book{Author: "Charlotte Brontë", Title: "Jane Eyre"}
 )
 
+var bookWorms = []Bookworm{
+	{Name: "Fadi", Books: []Book{handmaidsTale, theBellJar}},
+	{Name: "Peggy", Books: []Book{oryxAndCrake, handmaidsTale, janeEyre}},
+}
+
 // test helper function for asserting if two lists of Books are equal
 func equalBooks(got, want []Book) bool {
 	if len(want) != len(got) {
@@ -68,11 +73,8 @@ func TestLoadUserData(t *testing.T) {
 	tests := map[string]testCase{
 		"file_exists": {
 			dataFile: "test-data/bookworms.json",
-			want: []Bookworm{
-				{Name: "Fadi", Books: []Book{handmaidsTale, theBellJar}},
-				{Name: "Peggy", Books: []Book{oryxAndCrake, handmaidsTale, janeEyre}},
-			},
-			wantErr: false,
+			want:     bookWorms,
+			wantErr:  false,
 		},
 		"file_does_not_exist": {
 			dataFile: "test-data/foo.json",
