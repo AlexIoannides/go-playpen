@@ -12,7 +12,7 @@ var (
 	janeEyre      = Book{Author: "Charlotte Brontë", Title: "Jane Eyre"}
 )
 
-var bookWorms = []Bookworm{
+var bookworms = []Bookworm{
 	{Name: "Fadi", Books: []Book{handmaidsTale, theBellJar}},
 	{Name: "Peggy", Books: []Book{oryxAndCrake, handmaidsTale, janeEyre}},
 }
@@ -73,7 +73,7 @@ func TestLoadUserData(t *testing.T) {
 	tests := map[string]testCase{
 		"file_exists": {
 			dataFile: "test-data/bookworms.json",
-			want:     bookWorms,
+			want:     bookworms,
 			wantErr:  false,
 		},
 		"file_does_not_exist": {

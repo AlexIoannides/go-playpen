@@ -44,7 +44,7 @@ func TestRecommend(t *testing.T) {
 		wantBook := handmaidsTale
 		wantScore := math.Log(2) + 1
 
-		recommendations := recommend(bookWorms, targetBookworm, 1)
+		recommendations := recommend(bookworms, targetBookworm, 1)
 		if len(recommendations) != 1 {
 			t.Errorf("got %v recommendations, expected %v", len(recommendations), 1)
 		}
@@ -61,7 +61,7 @@ func TestRecommend(t *testing.T) {
 	t.Run("recommendations_when_no_books_in_common", func(t *testing.T) {
 		targetBookworm := Bookworm{Name: "Kevin", Books: make([]Book, 0)}
 
-		recommendations := recommend(bookWorms, targetBookworm, 1)
+		recommendations := recommend(bookworms, targetBookworm, 1)
 		if len(recommendations) != 0 {
 			t.Errorf("expected no recommendations, got %v", len(recommendations))
 		}

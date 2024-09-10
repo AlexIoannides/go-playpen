@@ -20,6 +20,21 @@ func main() {
 
 	fmt.Println("Books read by more than one bookworm:")
 	displayBooks(commonBooks)
+
+	newBookworm := Bookworm{
+		Name: "Kevin",
+		Books: []Book{
+			{Author: "Margaret Atwood", Title: "Oryx and Crake"},
+			{Author: "Charlotte Brontë", Title: "Jane Eyre"},
+		},
+	}
+	recommendations := recommend(bookwormData, newBookworm, 1)
+	var recommendedBooks = make([]Book, len(recommendations))
+	for i, recommendation := range recommendations {
+		recommendedBooks[i] = recommendation.Book
+	}
+	fmt.Printf("Recommended books for new bookworm %s:\n", newBookworm.Name)
+	displayBooks((recommendedBooks))
 }
 
 // Print title and authors for a list of books
