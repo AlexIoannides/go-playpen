@@ -72,12 +72,12 @@ func TestLoadUserData(t *testing.T) {
 
 	tests := map[string]testCase{
 		"file_exists": {
-			dataFile: "test-data/bookworms.json",
+			dataFile: "testdata/bookworms.json",
 			want:     bookworms,
 			wantErr:  false,
 		},
 		"file_does_not_exist": {
-			dataFile: "test-data/foo.json",
+			dataFile: "testdata/foo.json",
 			want:     nil,
 			wantErr:  true,
 		},

@@ -8,7 +8,7 @@ import (
 
 func main() {
 	var path string
-	flag.StringVar(&path, "path", "test-data/bookworms.json", "Path to JSON data file")
+	flag.StringVar(&path, "path", "testdata/bookworms.json", "Path to JSON data file")
 	flag.Parse()
 
 	bookwormData, err := loadUserData(path)
