@@ -3,6 +3,7 @@ package pocketlog
 import (
 	"fmt"
 	"io"
+	"os"
 )
 
 // Logger is used to log information
@@ -13,11 +14,13 @@ type Logger struct {
 
 // New returns a logger, ready to log at the required level
 // The default output is Stdout
-func New(threshold Level, output io.Writer) *Logger {
-	return &Logger{
-		threshold: threshold,
-		output:    output,
+func New(threshold Level, options ...Option) *Logger {
+	l := &Logger{threshold: threshold, output: os.Stdout}
+
+	for _, configFunc := range options {
+		configFunc(l)
 	}
+	return l
 }
 
 // logf prints the message to the output.
