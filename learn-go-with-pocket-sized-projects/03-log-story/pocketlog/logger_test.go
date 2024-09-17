@@ -1,7 +1,7 @@
 package pocketlog_test
 
 import (
-	"alexioannides/go-playpen/learn-go-with-pocket-sized-projects/03-log-story/logger/logger/pocketlog"
+	"alexioannides/go-playpen/learn-go-with-pocket-sized-projects/03-log-story/pocketlog"
 )
 
 func ExampleLogger_Debugf() {
