@@ -1,3 +1,4 @@
 # Gordle: A Word Game in Your Terminal
 
-TODO
+- runes
+- anonymous structures (e.g., when testing)
