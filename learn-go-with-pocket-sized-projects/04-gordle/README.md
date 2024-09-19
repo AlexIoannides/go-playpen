@@ -1,3 +1,3 @@
-# Gordle: A Wod Game in Your Terminal
+# Gordle: A Word Game in Your Terminal
 
 TODO
