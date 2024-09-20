@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 )
 
 const solutionLength = 5
@@ -42,7 +43,7 @@ func (g *Game) ask() []rune {
 			fmt.Fprintf(os.Stderr, "Gordle failed to read your guess: %s\n", err.Error())
 			continue
 		}
-		guess := []rune(string(playerInput))
+		guess := toUppercaseChars(string(playerInput))
 		err = g.validateGuess(guess)
 		if err != nil {
 			fmt.Fprintf(
@@ -73,4 +74,9 @@ func (g *Game) validateGuess(guess []rune) error {
 	} else {
 		return nil
 	}
+}
+
+// toUppercaseChars converts strings to a list of uppercase characters
+func toUppercaseChars(s string) []rune {
+	return []rune(strings.ToUpper(s))
 }

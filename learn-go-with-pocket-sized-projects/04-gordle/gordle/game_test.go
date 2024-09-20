@@ -68,3 +68,32 @@ func TestGame_validationGuess(t *testing.T) {
 		})
 	}
 }
+
+func TestToUppercaseChars(t *testing.T) {
+	testCases := map[string]struct {
+		word     string
+		expected string
+	}{
+		"all upper": {
+			word:     "FOO",
+			expected: "FOO",
+		},
+		"all lower": {
+			word:     "foo",
+			expected: "FOO",
+		},
+		"mixed": {
+			word:     "fOo",
+			expected: "FOO",
+		},
+	}
+
+	for tn, tc := range testCases {
+		t.Run(tn, func(t *testing.T) {
+			got := string(toUppercaseChars(tc.word))
+			if got != tc.expected {
+				t.Errorf("got %s, expected %s", got, tc.expected)
+			}
+		})
+	}
+}
