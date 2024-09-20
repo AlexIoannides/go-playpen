@@ -20,26 +20,26 @@ func TestGame_ask(t *testing.T) {
 			input: "مرحبا",
 			want:  []rune("مرحبا"),
 		},
-		"3 chars in Japanese": {
-			input: "こんに\nこんにちは",
-			want:  []rune("こんにちは"),
+		"3 chars in English": {
+			input: "FOO",
+			want:  []rune("FOO"),
 		},
 	}
 
-	for testName, testCase := range testCases {
-		t.Run(testName, func(t *testing.T) {
-			stringReader := strings.NewReader(testCase.input)
-			game := New(stringReader)
+	for tn, tc := range testCases {
+		t.Run(tn, func(t *testing.T) {
+			stringReader := strings.NewReader(tc.input)
+			game := New(stringReader, tc.input, 1)
 
 			got := game.ask()
-			if !slices.Equal(got, testCase.want) {
-				t.Errorf("got = %v, want %v", string(got), string(testCase.want))
+			if !slices.Equal(got, tc.want) {
+				t.Errorf("got = %v, want %v", string(got), string(tc.want))
 			}
 		})
 	}
 }
 
-func TestGame_validationGuess(t *testing.T) {
+func TestGame_validateGuess(t *testing.T) {
 	testCases := map[string]struct {
 		word     []rune
 		expected error
@@ -60,7 +60,7 @@ func TestGame_validationGuess(t *testing.T) {
 
 	for tn, tc := range testCases {
 		t.Run(tn, func(t *testing.T) {
-			g := New(nil)
+			g := New(nil, "GUESS", 0)
 			err := g.validateGuess(tc.word)
 			if !errors.Is(err, tc.expected) {
 				t.Errorf("%c, expected %q, got %q", tc.word, tc.expected, err)

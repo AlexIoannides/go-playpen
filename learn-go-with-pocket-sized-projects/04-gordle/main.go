@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
-	g := gordle.New(os.Stdin)
+	solution := "foobar"
+	g := gordle.New(os.Stdin, solution, 5)
 	g.Play()
 }

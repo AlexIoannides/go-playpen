@@ -1,5 +1,5 @@
 # Gordle: A Word Game in Your Terminal
 
-- runes
+- working with runes to manipulate Unicode characters
 - anonymous structures (e.g., when testing)
 - `strings` and `slices` packages from the std library
