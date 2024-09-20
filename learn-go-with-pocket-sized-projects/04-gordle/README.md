@@ -2,3 +2,4 @@
 
 - runes
 - anonymous structures (e.g., when testing)
+- `strings` and `slices` packages from the std library
