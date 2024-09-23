@@ -29,7 +29,9 @@ func TestGame_ask(t *testing.T) {
 	for tn, tc := range testCases {
 		t.Run(tn, func(t *testing.T) {
 			stringReader := strings.NewReader(tc.input)
-			game := New(stringReader, tc.input, 1)
+			testCorpus := []string{tc.input}
+
+			game, _ := New(stringReader, testCorpus, 1)
 
 			got := game.ask()
 			if !slices.Equal(got, tc.want) {
@@ -60,7 +62,8 @@ func TestGame_validateGuess(t *testing.T) {
 
 	for tn, tc := range testCases {
 		t.Run(tn, func(t *testing.T) {
-			g := New(nil, "GUESS", 0)
+			c := []string{"GUESS"}
+			g, _ := New(nil, c, 0)
 			err := g.validateGuess(tc.word)
 			if !errors.Is(err, tc.expected) {
 				t.Errorf("%c, expected %q, got %q", tc.word, tc.expected, err)

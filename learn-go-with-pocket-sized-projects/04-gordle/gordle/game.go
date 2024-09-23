@@ -17,14 +17,17 @@ type Game struct {
 }
 
 // New returns a Game, which can be used to play Gordle
-func New(playerInput io.Reader, solution string, maxAttempts int) *Game {
+func New(playerInput io.Reader, corpus []string, maxAttempts int) (*Game, error) {
+	if len(corpus) == 0 {
+		return nil, ErrCorpusIsEmpty
+	}
 	g := &Game{
 		reader:      bufio.NewReader(playerInput),
-		solution:    toUppercaseChars(solution),
+		solution:    toUppercaseChars(pickWord(corpus)),
 		maxAttempts: maxAttempts,
 	}
 
-	return g
+	return g, nil
 }
 
 // Play runs the game.
