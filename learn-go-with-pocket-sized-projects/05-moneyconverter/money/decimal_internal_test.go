@@ -42,13 +42,15 @@ func TestParseDecimal(t *testing.T) {
 		},
 		"with apostrophes for readability": {
 			decimal: "12'152.03",
-			// expected: Decimal{integerPart: 12152, decimalPart: 3, toUnit: 2}, // for future
+			// expected: Decimal{integerPart: 12152, decimalPart: 3, toUnit: 2}, // for
+			// future
 			// implementations
 			err: ErrInvalidDecimal,
 		},
 		"with underscores for readability": {
 			decimal: "12_152.03",
-			// expected: Decimal{integerPart: 12152, decimalPart: 3, toUnit: 2}, // for future
+			// expected: Decimal{integerPart: 12152, decimalPart: 3, toUnit: 2}, // for
+			// future
 			// implementations
 			err: ErrInvalidDecimal,
 		},

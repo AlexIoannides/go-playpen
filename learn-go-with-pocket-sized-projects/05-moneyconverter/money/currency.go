@@ -6,10 +6,12 @@ type Currency struct {
 	precision byte
 }
 
-// ErrInvalidCurrencyCode is returned when the currency to parse is not a standard 3-letter code.
+// ErrInvalidCurrencyCode is returned when the currency to parse is not a standard
+// 3-letter code.
 const ErrInvalidCurrencyCode = Error("invalid currency code")
 
-// ParseCurrency returns the currency associated to a name and may return errUnknownCurrency.
+// ParseCurrency returns the currency associated to a name and may return
+// errUnknownCurrency.
 func ParseCurrency(code string) (Currency, error) {
 	if len(code) != 3 {
 		return Currency{}, ErrInvalidCurrencyCode
@@ -32,5 +34,10 @@ func ParseCurrency(code string) (Currency, error) {
 
 // String implements Stringer.
 func (c Currency) String() string {
+	return c.code
+}
+
+// Code returns the ISO code for the currency.
+func (c Currency) Code() string {
 	return c.code
 }

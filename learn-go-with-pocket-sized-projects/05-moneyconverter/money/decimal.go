@@ -10,7 +10,8 @@ import (
 // Decimal is capable of storing a decimal value such as 30 or 1543.243.
 // example: 1.52 = 152 * 10^(-2) will be stored as {152, 2}
 type Decimal struct {
-	// subunits is the amount of subunits. Multiply it by the precision to get the real value
+	// subunits is the amount of subunits. Multiply it by the precision to get the real
+	// value
 	subunits int64
 	// Number of "subunits" in a unit, expressed as a power of 10.
 	precision byte
@@ -20,7 +21,8 @@ const (
 	// ErrInvalidDecimal is returned if the decimal is malformed.
 	ErrInvalidDecimal = Error("unable to convert the decimal")
 
-	// ErrTooLarge is returned if the quantity is too large - this would cause floating point
+	// ErrTooLarge is returned if the quantity is too large - this would cause floating
+	// point
 	// precision errors.
 	ErrTooLarge = Error("quantity over 10^12 is too large")
 
@@ -29,7 +31,8 @@ const (
 )
 
 // ParseDecimal converts a string into its Decimal representation.
-// It assumes there is up to one decimal separator, and that the separator is '.' (full stop
+// It assumes there is up to one decimal separator, and that the separator is '.' (full
+// stop
 // character).
 func ParseDecimal(value string) (Decimal, error) {
 	intPart, fracPart, _ := strings.Cut(value, ".")
@@ -86,11 +89,13 @@ func pow10(power byte) int64 {
 	}
 }
 
-// simplifies removes trailing zeroes - as long as they're on the right side of the decimal
+// simplifies removes trailing zeroes - as long as they're on the right side of the
+// decimal
 // separator.
 func (d *Decimal) simplify() {
 	// Using %10 returns the last digit in base 10 of a number.
-	// If the precision is positive, that digit belongs to the right side of the decimal separator.
+	// If the precision is positive, that digit belongs to the right side of the decimal
+	// separator.
 	for d.subunits%10 == 0 && d.precision > 0 {
 		d.precision--
 		d.subunits /= 10

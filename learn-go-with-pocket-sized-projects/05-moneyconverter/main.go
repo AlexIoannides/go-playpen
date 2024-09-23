@@ -1,10 +1,12 @@
 package main
 
 import (
+	"alexioannides/go-playpen/learn-go-with-pocket-sized-projects/05-moneyconverter/ecbank"
 	"alexioannides/go-playpen/learn-go-with-pocket-sized-projects/05-moneyconverter/money"
 	"flag"
 	"fmt"
 	"os"
+	"time"
 )
 
 func main() {
@@ -15,17 +17,32 @@ func main() {
 	// parse flags
 	flag.Parse()
 
-	// parse the source currency
-	fromCurrency, err := money.ParseCurrency(*from)
-	if err != nil {
-		_, _ = fmt.Fprintf(os.Stderr, "unable to parse source currency %q: %s.\n", *from, err.Error())
-		os.Exit(1)
-	}
-
 	// parse the target currency
 	toCurrency, err := money.ParseCurrency(*to)
 	if err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "unable to parse target currency %q: %s.\n", *to, err.Error())
+		os.Exit(1)
+	}
+
+	amount := parseAmount(from)
+
+	rates := ecbank.NewClient(30 * time.Second)
+
+	// convert the amount from the source currency to the target with the current exchange rate
+	convertedAmount, err := money.Convert(amount, toCurrency, rates)
+	if err != nil {
+		_, _ = fmt.Fprintf(os.Stderr, "unable to convert %s to %s: %s.\n", amount, toCurrency, err.Error())
+		os.Exit(1)
+	}
+
+	fmt.Printf("%s = %s\n", amount, convertedAmount)
+}
+
+func parseAmount(from *string) money.Amount {
+	// parse the source currency
+	fromCurrency, err := money.ParseCurrency(*from)
+	if err != nil {
+		_, _ = fmt.Fprintf(os.Stderr, "unable to parse source currency %q: %s.\n", *from, err.Error())
 		os.Exit(1)
 	}
 
@@ -51,12 +68,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	// convert the amount from the source currency to the target with the current exchange rate
-	convertedAmount, err := money.Convert(amount, toCurrency)
-	if err != nil {
-		_, _ = fmt.Fprintf(os.Stderr, "unable to convert %s to %s: %s.\n", amount, toCurrency, err.Error())
-		os.Exit(1)
-	}
-
-	fmt.Printf("%s = %s\n", amount, convertedAmount)
+	return amount
 }

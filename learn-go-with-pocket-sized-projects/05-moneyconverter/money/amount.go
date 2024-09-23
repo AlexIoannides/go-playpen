@@ -21,6 +21,7 @@ func NewAmount(quantity Decimal, currency Currency) (Amount, error) {
 		quantity.subunits *= pow10(currency.precision - quantity.precision)
 		quantity.precision = currency.precision
 	}
+
 	return Amount{quantity: quantity, currency: currency}, nil
 }
 
