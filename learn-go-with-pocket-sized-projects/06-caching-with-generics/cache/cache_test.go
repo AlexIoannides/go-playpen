@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
+
+const testTTL = time.Millisecond * 100
 
 /*
 	TestCache is an integration test.
@@ -21,7 +24,7 @@ import (
 - Delete 5 and check that 3 still exists
 */
 func TestCache(t *testing.T) {
-	c := cache.New[int, string]()
+	c := cache.New[int, string](testTTL)
 
 	c.Upsert(5, "fünf")
 
@@ -59,7 +62,7 @@ func TestCache(t *testing.T) {
 // TestCache_Parallel_goroutines simulates a number of parallel tasks each operating on the cache.
 // It passes even when we use "go test -race .".
 func TestCache_Parallel_goroutines(t *testing.T) {
-	c := cache.New[int, string]()
+	c := cache.New[int, string](testTTL)
 
 	const parallelTasks = 10
 	wg := sync.WaitGroup{}
@@ -79,7 +82,7 @@ func TestCache_Parallel_goroutines(t *testing.T) {
 
 // TestCache_Parallel runs two goroutines that have concurrent access to write to the cache.
 func TestCache_Parallel(t *testing.T) {
-	c := cache.New[int, string]()
+	c := cache.New[int, string](testTTL)
 
 	t.Run("write six", func(t *testing.T) {
 		t.Parallel()
@@ -90,4 +93,21 @@ func TestCache_Parallel(t *testing.T) {
 		t.Parallel()
 		c.Upsert(6, "kuus")
 	})
+}
+
+func TestCache_TTL(t *testing.T) {
+	c := cache.New[string, string](testTTL)
+	c.Upsert("Norwegian", "Blue")
+
+	// can we find the value we just cached?
+	got, found := c.Read("Norwegian")
+	assert.True(t, found)
+	assert.Equal(t, "Blue", got)
+
+	// wait until TTL expires and try again
+	time.Sleep(testTTL * 2)
+	got, found = c.Read("Norwegian")
+	assert.False(t, found)
+	assert.Equal(t, "", got)
+
 }
