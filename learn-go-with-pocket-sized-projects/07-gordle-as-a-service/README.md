@@ -1,3 +1,3 @@
 # Gordle as a Service
 
-TODO
+- panicing!
