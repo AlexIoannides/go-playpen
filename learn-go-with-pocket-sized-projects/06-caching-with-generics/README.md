@@ -7,4 +7,3 @@
 - testing for data races using concurrent test execution and `go test -race`
 - using the `time` package from the std library for working with times and durations
 - using the assert package from the `"github.com/stretchr/testify` module for assert statements
-
