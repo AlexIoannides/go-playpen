@@ -8,7 +8,6 @@ import (
 
 // A Logger that can log messages
 type Logger struct {
-	// A mutex ensures we don't jam the writer
 	mutex  sync.Mutex
 	logger *log.Logger
 }
