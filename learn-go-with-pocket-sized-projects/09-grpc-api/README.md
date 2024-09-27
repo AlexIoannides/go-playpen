@@ -1,3 +1,3 @@
 # A Habits Tracker using gRPC
 
-TODO
+- embedding structs as a form of composition
