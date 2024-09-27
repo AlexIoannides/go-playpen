@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package habits;
+option go_package = "alexioannides/go-playpen/learn-go-with-pocket-sized-projects/09-grpc-api/api";
+
+import "habit.proto";
+
+// Habits is a service for registering and tracking Habits
+service Habits {
+    // Create Habit is the endpoint that registers a Habit
+    rpc CreateHabit(CreateHabitRequest) returns (CreateHabitResponse);
+}
+
+// CreateHabitRequest is the message sent to create a Habit
+message CreateHabitRequest {
+    // Name of the new Habit
+    string name = 1;
+    // Frequency of the new Habit, defaults to once per-week
+    optional int32 weekly_frequency = 2;
+}
+
+// CreateHabitResponse is the response of the create endpoint
+message CreateHabitResponse {
+    Habit habit = 1;
+}
